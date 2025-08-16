@@ -17,7 +17,7 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    public List<Category> listCategory(Category category) {
+    public List<Category> listCategory() {
         return categoryRepository.findAll();
     }
 
@@ -28,14 +28,4 @@ public class CategoryService {
     public void deleteCategory(Long id){
         categoryRepository.deleteById(id);
     }
-
-    public List<Category> updateCategory(Category category, Long id){
-        Optional<Category> existentCategory = categoryRepository.findById(id);
-        if(existentCategory.isPresent()) {
-            categoryRepository.save(category);
-            category.setId(id);
-        }
-        return null;
-    }
-
 }
