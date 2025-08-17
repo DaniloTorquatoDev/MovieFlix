@@ -1,6 +1,7 @@
 package com.movieflix.service;
 
 import com.movieflix.entity.Category;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.movieflix.repository.CategoryRepository;
@@ -9,9 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryService {
-    @Autowired
-    CategoryRepository categoryRepository;
+
+    private final CategoryRepository categoryRepository;
 
     public Category addCategory(Category category) {
         return categoryRepository.save(category);

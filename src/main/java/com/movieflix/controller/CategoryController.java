@@ -1,26 +1,23 @@
 package com.movieflix.controller;
 
-import com.movieflix.controller.request.CategoryResponse;
-import com.movieflix.controller.response.CategoryRequest;
+import com.movieflix.controller.response.CategoryResponse;
+import com.movieflix.controller.request.CategoryRequest;
 import com.movieflix.entity.Category;
 import com.movieflix.mapper.CategoryMapper;
-import org.aspectj.apache.bcel.classfile.Module;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.movieflix.service.CategoryService;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/movieflix/category")
+@RequiredArgsConstructor
 public class CategoryController {
-    @Autowired
-    CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @PostMapping
     public ResponseEntity<CategoryResponse> addCategory(@RequestBody CategoryRequest categoryRequest) {
@@ -42,7 +39,7 @@ public class CategoryController {
     @GetMapping("/{id}")
     public ResponseEntity<CategoryResponse> listCategoryById(@PathVariable Long id) {
         return categoryService.ListCategoryById(id)
-                .map(category ->ResponseEntity.ok(CategoryMapper.toCategoryResponse(category)))
+                .map(category -> ResponseEntity.ok(CategoryMapper.toCategoryResponse(category)))
                 .orElse(ResponseEntity.notFound().build());
     }
 

@@ -1,11 +1,9 @@
 package com.movieflix.mapper;
 
-import com.movieflix.controller.request.CategoryResponse;
-import com.movieflix.controller.response.CategoryRequest;
+import com.movieflix.controller.response.CategoryResponse;
+import com.movieflix.controller.request.CategoryRequest;
 import com.movieflix.entity.Category;
 import lombok.experimental.UtilityClass;
-
-import java.net.CacheRequest;
 
 @UtilityClass
 public class CategoryMapper {
