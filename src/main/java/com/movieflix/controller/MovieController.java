@@ -1,7 +1,6 @@
 package com.movieflix.controller;
 
 import com.movieflix.controller.request.MovieRequest;
-import com.movieflix.controller.request.StreamingRequest;
 import com.movieflix.controller.response.MovieResponse;
 import com.movieflix.entity.Movie;
 import com.movieflix.mapper.MovieMapper;
@@ -27,10 +26,16 @@ public class MovieController {
 
     @GetMapping
     public ResponseEntity<List<MovieResponse>> findAll() {
-        return ResponseEntity.ok(service.fidAll()
+        return ResponseEntity.ok(service.findAll()
                 .stream()
                 .map(MovieMapper::toMovieResponse)
                 .toList());
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<MovieResponse> findById(@PathVariable Long id) {
+        return service.findById(id)
+                .map(movie -> ResponseEntity.ok(MovieMapper.toMovieResponse(movie)))
+                .orElse(ResponseEntity.notFound().build());
     }
 
 
