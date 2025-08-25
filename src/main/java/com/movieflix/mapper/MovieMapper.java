@@ -1,7 +1,6 @@
 package com.movieflix.mapper;
 
 import com.movieflix.controller.request.MovieRequest;
-import com.movieflix.controller.request.StreamingRequest;
 import com.movieflix.controller.response.CategoryResponse;
 import com.movieflix.controller.response.MovieResponse;
 import com.movieflix.controller.response.StreamingResponse;
@@ -14,7 +13,7 @@ import java.util.List;
 
 @UtilityClass
 public class MovieMapper {
-    public static Movie toMovie(MovieRequest request) {
+    public static Movie toMovieRequest(MovieRequest request) {
 
         List<Category> categories = request.categories().stream()
                 .map(categoryId -> Category.builder().id(categoryId).build())

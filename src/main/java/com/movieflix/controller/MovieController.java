@@ -10,33 +10,59 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/movieflix/movie")
 @RequiredArgsConstructor
 public class MovieController {
 
-    private final MovieService service;
+    private final MovieService movieService;
 
     @PostMapping
-    public ResponseEntity<MovieResponse> save(@RequestBody MovieRequest request){
-        Movie savedMovie = service.save(MovieMapper.toMovie(request));
+    public ResponseEntity<MovieResponse> save(@RequestBody MovieRequest request) {
+        Movie savedMovie = movieService.save(MovieMapper.toMovieRequest(request));
         return ResponseEntity.ok(MovieMapper.toMovieResponse(savedMovie));
     }
 
     @GetMapping
     public ResponseEntity<List<MovieResponse>> findAll() {
-        return ResponseEntity.ok(service.findAll()
+        return ResponseEntity.ok(movieService.findAll()
                 .stream()
                 .map(MovieMapper::toMovieResponse)
                 .toList());
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<MovieResponse> findById(@PathVariable Long id) {
-        return service.findById(id)
+        return movieService.findById(id)
                 .map(movie -> ResponseEntity.ok(MovieMapper.toMovieResponse(movie)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<MovieResponse> update(@PathVariable Long id, @RequestBody MovieRequest request) {
+        return movieService.update(id, MovieMapper.toMovieRequest(request))
+                .map(movie -> ResponseEntity.ok(MovieMapper.toMovieResponse(movie)))
+                .orElse(ResponseEntity.notFound().build());
+    }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<MovieResponse>> findByCategory(@RequestParam Long category) {
+        return ResponseEntity.ok(movieService.findByCategory(category)
+                .stream()
+                .map(MovieMapper::toMovieResponse)
+                .toList());
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteMovie(@PathVariable Long id) {
+        Optional<Movie> optionalMovie = movieService.findById(id);
+        if (optionalMovie.isPresent()){
+            movieService.deleteMovie(id);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+
+    }
 }
