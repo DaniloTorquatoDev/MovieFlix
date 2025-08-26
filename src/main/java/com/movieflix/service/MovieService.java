@@ -1,10 +1,12 @@
 package com.movieflix.service;
 
+import com.movieflix.config.JWTUserData;
 import com.movieflix.entity.Category;
 import com.movieflix.entity.Movie;
 import com.movieflix.entity.Streaming;
 import com.movieflix.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
